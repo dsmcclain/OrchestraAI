@@ -3,7 +3,7 @@ package dev.dylan.StringSection.Listeners;
 import dev.dylan.StringSection.models.Conversation;
 import dev.dylan.StringSection.models.InteractionState;
 import dev.dylan.StringSection.models.Prompt;
-import dev.dylan.StringSection.services.GoogleConnector;
+import dev.dylan.StringSection.services.GeminiConnector;
 import dev.dylan.StringSection.services.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -15,12 +15,12 @@ import java.util.UUID;
 
 @Configuration
 public class InputListener {
-    private GoogleConnector connector;
+    private GeminiConnector connector;
     private KafkaProducer producer;
 
     @Autowired
-    public void promptListener(GoogleConnector googleConnector, KafkaProducer producer) {
-        this.connector = googleConnector;
+    public void promptListener(GeminiConnector geminiConnector, KafkaProducer producer) {
+        this.connector = geminiConnector;
         this.producer = producer;
     }
 
@@ -56,8 +56,6 @@ public class InputListener {
                 .state(InteractionState.CREATED)
                 .build();
 
-        // TODO: this uses the PromptSerializer which is coupled to the google api.
-        // we actually want a separate serializer for the data class itself.
         producer.sendMessage("prompts", prompt);
         return prompt;
     }

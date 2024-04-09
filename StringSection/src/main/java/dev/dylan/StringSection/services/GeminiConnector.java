@@ -2,6 +2,7 @@ package dev.dylan.StringSection.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.dylan.StringSection.config.JsonConfig.GeminiPromptMapper;
 import dev.dylan.StringSection.models.Prompt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,25 +12,28 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
-public class GoogleConnector {
+public class GeminiConnector {
     private final WebClient client = WebClient.builder()
             .baseUrl("https://generativelanguage.googleapis.com")
             .build();
-    private ObjectMapper jsonMapper;
+    private ObjectMapper geminiPromptMapper;
+    private ResponseHandler responseHandler;
     private String apiKey;
-    private KafkaProducer kafkaProducer;
-
 
     @Autowired
-    public void googleConnector(ObjectMapper jsonMapper, @Value("${gemini.key}") String apiKey, KafkaProducer kafkaProducer) {
-        this.jsonMapper = jsonMapper;
+    public void geminiConnector(
+            GeminiPromptMapper geminiPromptMapper,
+            @Value("${gemini.key}") String apiKey,
+            ResponseHandler responseHandler
+    ) {
+        this.geminiPromptMapper = geminiPromptMapper;
         this.apiKey = apiKey;
-        this.kafkaProducer = kafkaProducer;
+        this.responseHandler = responseHandler;
     }
 
     public void send(Prompt prompt) throws JsonProcessingException {
 
-        String body = jsonMapper.writeValueAsString(prompt);
+        String body = geminiPromptMapper.writeValueAsString(prompt);
 
         client.post()
                 .uri("/v1beta/models/gemini-1.0-pro:generateContent?key={apiKey}", apiKey)
@@ -37,6 +41,6 @@ public class GoogleConnector {
                 .body(BodyInserters.fromValue(body))
                 .retrieve()
                 .bodyToMono(String.class)
-                .subscribe(response -> kafkaProducer.sendMessage("generations", response));
+                .subscribe(response -> responseHandler.handleResponse(prompt, response));
     }
 }

@@ -15,11 +15,11 @@ import org.hibernate.type.SqlTypes;
 @NoArgsConstructor
 public class Generation {
 
-    public Generation(String uuid, String promptUuid, String conversationUuid, String response) {
+    public Generation(String uuid, String promptUuid, String conversationUuid, String body) {
         this.uuid = uuid;
         this.promptUuid = promptUuid;
         this.conversationUuid = conversationUuid;
-        this.response = response;
+        this.body = body;
     }
 
     @Id
@@ -29,7 +29,7 @@ public class Generation {
     private String promptUuid;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    private String response;
+    private String body;
 
     private String conversationUuid;
 
@@ -39,7 +39,7 @@ public class Generation {
                 "id=" + id +
                 ", uuid='" + uuid + '\'' +
                 ", promptUuid='" + promptUuid + '\'' +
-                ", response='" + response + '\'' +
+                ", response='" + body + '\'' +
                 ", conversationUuid='" + conversationUuid + '\'' +
                 '}';
     }

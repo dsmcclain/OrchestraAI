@@ -29,6 +29,5 @@ public class KafkaProducer {
            System.out.println("Unable to publish object: " + object.toString());
            e.printStackTrace();
     }
-
    }
 }
