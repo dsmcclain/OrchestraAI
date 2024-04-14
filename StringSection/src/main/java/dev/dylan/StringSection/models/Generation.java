@@ -14,4 +14,5 @@ public class Generation {
     private String promptUuid;
     private String conversationUuid;
     private String body;
+    private String rawResponse;
 }
