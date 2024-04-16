@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class UserPrompt {
-
     private String prompt;
     private LocalDateTime timestamp;
 

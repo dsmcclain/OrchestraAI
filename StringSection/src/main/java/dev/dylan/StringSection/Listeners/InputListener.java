@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -39,7 +40,7 @@ public class InputListener {
     Conversation buildConversation(String conversationUuid, String promptUuid) {
         Conversation conversation =  Conversation.builder()
                 .Uuid(conversationUuid)
-                .createdAt(LocalDateTime.now())
+                .createdAt(Instant.now())
                 .state(InteractionState.CREATED)
                 .originalPromptUuid(promptUuid)
                 .build();
