@@ -12,7 +12,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 public class Conversation {
-    private String Uuid;
+    private String uuid;
     private String title;
     private Instant createdAt;
     private InteractionState state;

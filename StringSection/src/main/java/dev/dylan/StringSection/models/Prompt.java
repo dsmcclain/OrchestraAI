@@ -7,7 +7,7 @@ import java.time.Instant;
 @Data
 @Builder
 public class Prompt {
-    private String Uuid;
+    private String uuid;
     private String conversationUuid;
     private String body;
     private String generationUuid;

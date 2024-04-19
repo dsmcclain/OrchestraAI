@@ -1,5 +1,7 @@
 package dev.dylan.StringSection.Listeners;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.dylan.StringSection.models.Conversation;
 import dev.dylan.StringSection.models.InteractionState;
 import dev.dylan.StringSection.models.Prompt;
@@ -27,10 +29,11 @@ public class InputListener {
 
     @KafkaListener(topics = "input")
     public String listens(final String in) throws IOException {
-        String promptUuid = UUID.randomUUID().toString();
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode input = mapper.readTree(in);
         String conversationUuid = UUID.randomUUID().toString();
-        Conversation conversation = buildConversation(conversationUuid, promptUuid);
-        Prompt prompt = buildPrompt(promptUuid, conversationUuid, in);
+        Prompt prompt = buildPrompt(conversationUuid, input);
+        Conversation conversation = buildConversation(conversationUuid, prompt.getUuid());
 
         connector.send(prompt);
 
@@ -39,7 +42,7 @@ public class InputListener {
 
     Conversation buildConversation(String conversationUuid, String promptUuid) {
         Conversation conversation =  Conversation.builder()
-                .Uuid(conversationUuid)
+                .uuid(conversationUuid)
                 .createdAt(Instant.now())
                 .state(InteractionState.CREATED)
                 .originalPromptUuid(promptUuid)
@@ -49,11 +52,11 @@ public class InputListener {
         return conversation;
     }
 
-    Prompt buildPrompt(String promptUuid, String conversationUuid, String in) {
+    Prompt buildPrompt(String conversationUuid, JsonNode input) {
         Prompt prompt = Prompt.builder()
-                .Uuid(promptUuid)
+                .uuid(input.get("uuid").toString())
                 .conversationUuid(conversationUuid)
-                .body(in)
+                .body(input.get("prompt").toString())
                 .state(InteractionState.CREATED)
                 .build();
 
