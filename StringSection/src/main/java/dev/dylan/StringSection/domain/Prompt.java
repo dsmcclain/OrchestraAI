@@ -2,7 +2,7 @@ package dev.dylan.StringSection.domain;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Data
 @Builder
@@ -11,6 +11,6 @@ public class Prompt {
     private String conversationUuid;
     private String body;
     private String generationUuid;
-    private LocalDateTime sentAt;
+    private Instant sentAt;
     private InteractionState state;
 }

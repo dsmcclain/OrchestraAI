@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Generation {
-    private String Uuid;
+    private String uuid;
     private String promptUuid;
     private String conversationUuid;
     private String body;

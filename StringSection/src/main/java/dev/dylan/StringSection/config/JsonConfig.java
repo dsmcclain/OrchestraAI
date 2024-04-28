@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 
@@ -17,7 +18,7 @@ public class JsonConfig {
     public SimpleModule getBaseModule() {
         SimpleModule module = new SimpleModule();
 
-        module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
+        module.addSerializer(Instant.class, new LocalDateTimeSerializer());
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
 
         return module;

@@ -5,12 +5,14 @@ import dev.dylan.StringSection.domain.InteractionState;
 import dev.dylan.StringSection.domain.Prompt;
 import dev.dylan.StringSection.service.GeminiConnector;
 import dev.dylan.StringSection.service.KafkaProducer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 @Configuration
@@ -26,10 +28,11 @@ public class InputListener {
 
     @KafkaListener(topics = "input")
     public String listens(final String in) throws IOException {
-        String promptUuid = UUID.randomUUID().toString();
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode input = mapper.readTree(in);
         String conversationUuid = UUID.randomUUID().toString();
-        Conversation conversation = buildConversation(conversationUuid, promptUuid);
-        Prompt prompt = buildPrompt(promptUuid, conversationUuid, in);
+        Prompt prompt = buildPrompt(conversationUuid, input);
+        Conversation conversation = buildConversation(conversationUuid, prompt.getUuid());
 
         connector.send(prompt);
 
@@ -38,8 +41,8 @@ public class InputListener {
 
     Conversation buildConversation(String conversationUuid, String promptUuid) {
         Conversation conversation =  Conversation.builder()
-                .Uuid(conversationUuid)
-                .createdAt(LocalDateTime.now())
+                .uuid(conversationUuid)
+                .createdAt(Instant.now())
                 .state(InteractionState.CREATED)
                 .originalPromptUuid(promptUuid)
                 .build();
@@ -48,11 +51,11 @@ public class InputListener {
         return conversation;
     }
 
-    Prompt buildPrompt(String promptUuid, String conversationUuid, String in) {
+    Prompt buildPrompt(String conversationUuid, JsonNode input) {
         Prompt prompt = Prompt.builder()
-                .uuid(promptUuid)
+                .uuid(input.get("uuid").toString())
                 .conversationUuid(conversationUuid)
-                .body(in)
+                .body(input.get("prompt").toString())
                 .state(InteractionState.CREATED)
                 .build();
 

@@ -5,16 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Conversation {
-    private String Uuid;
+    private String uuid;
     private String title;
-    private LocalDateTime createdAt;
+    private Instant createdAt;
     private InteractionState state;
     private String originalPromptUuid;
 }
