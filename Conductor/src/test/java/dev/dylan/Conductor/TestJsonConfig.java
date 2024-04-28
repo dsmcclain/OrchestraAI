@@ -20,10 +20,10 @@ public class TestJsonConfig {
     public ObjectMapper objectMapper = new JsonConfig().objectMapper();
     @Test
     void TestTimestampFormat() throws JsonProcessingException {
-        String instantExpected = "2014-12-22T10:15:30Z";
+        String instantExpected = "2014-12-22T10:15:30.111Z";
         Clock clock = Clock.fixed(Instant.parse(instantExpected), ZoneId.of("UTC"));
-        LocalDateTime t = LocalDateTime.now(clock);
+        Instant t = Instant.now(clock);
 
-        Assertions.assertEquals(objectMapper.writeValueAsString(t), "\"2014-12-22T10:15:30\"");
+        Assertions.assertEquals(objectMapper.writeValueAsString(t), "\"2014-12-22T10:15:30.111Z\"");
     }
 }

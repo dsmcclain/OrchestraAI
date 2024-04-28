@@ -3,7 +3,7 @@ package dev.dylan.StringSection.config;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import dev.dylan.StringSection.models.Prompt;
+import dev.dylan.StringSection.domain.Prompt;
 
 import java.io.IOException;
 

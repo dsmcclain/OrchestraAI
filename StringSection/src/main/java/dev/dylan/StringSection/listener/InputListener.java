@@ -1,10 +1,10 @@
-package dev.dylan.StringSection.Listeners;
+package dev.dylan.StringSection.listener;
 
-import dev.dylan.StringSection.models.Conversation;
-import dev.dylan.StringSection.models.InteractionState;
-import dev.dylan.StringSection.models.Prompt;
-import dev.dylan.StringSection.services.GeminiConnector;
-import dev.dylan.StringSection.services.KafkaProducer;
+import dev.dylan.StringSection.domain.Conversation;
+import dev.dylan.StringSection.domain.InteractionState;
+import dev.dylan.StringSection.domain.Prompt;
+import dev.dylan.StringSection.service.GeminiConnector;
+import dev.dylan.StringSection.service.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -50,7 +50,7 @@ public class InputListener {
 
     Prompt buildPrompt(String promptUuid, String conversationUuid, String in) {
         Prompt prompt = Prompt.builder()
-                .Uuid(promptUuid)
+                .uuid(promptUuid)
                 .conversationUuid(conversationUuid)
                 .body(in)
                 .state(InteractionState.CREATED)

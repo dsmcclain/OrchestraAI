@@ -14,7 +14,7 @@ public class JsonConfig {
     public ObjectMapper objectMapper() {
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.setDateFormat(new SimpleDateFormat( "yyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+        objectMapper.setDateFormat(new SimpleDateFormat( "yyy-MM-dd'T'HH:mm:ss.SSS"));
         return objectMapper;
     }
 }

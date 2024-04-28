@@ -1,4 +1,4 @@
-package dev.dylan.StringSection.services;
+package dev.dylan.StringSection.service;
 
 public class BuilderWithProducer {
 

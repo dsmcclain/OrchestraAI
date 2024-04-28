@@ -1,9 +1,8 @@
-package dev.dylan.StringSection.services;
+package dev.dylan.StringSection.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import dev.dylan.StringSection.models.Generation;
-import dev.dylan.StringSection.models.Prompt;
-import org.apache.coyote.Response;
+import dev.dylan.StringSection.domain.Generation;
+import dev.dylan.StringSection.domain.Prompt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;

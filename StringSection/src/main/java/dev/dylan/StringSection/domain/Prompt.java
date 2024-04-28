@@ -1,4 +1,4 @@
-package dev.dylan.StringSection.models;
+package dev.dylan.StringSection.domain;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class Prompt {
-    private String Uuid;
+    private String uuid;
     private String conversationUuid;
     private String body;
     private String generationUuid;

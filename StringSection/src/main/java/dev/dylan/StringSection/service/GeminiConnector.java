@@ -1,9 +1,9 @@
-package dev.dylan.StringSection.services;
+package dev.dylan.StringSection.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.dylan.StringSection.config.JsonConfig.GeminiPromptMapper;
-import dev.dylan.StringSection.models.Prompt;
+import dev.dylan.StringSection.domain.Prompt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -16,7 +16,7 @@ public class GeminiConnector {
     private final WebClient client = WebClient.builder()
             .baseUrl("https://generativelanguage.googleapis.com")
             .build();
-    private ObjectMapper geminiPromptMapper;
+    private GeminiPromptMapper geminiPromptMapper;
     private ResponseHandler responseHandler;
     private String apiKey;
 

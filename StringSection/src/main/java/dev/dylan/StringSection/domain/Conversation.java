@@ -1,4 +1,4 @@
-package dev.dylan.StringSection.models;
+package dev.dylan.StringSection.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

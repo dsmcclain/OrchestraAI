@@ -19,7 +19,6 @@ import java.util.Scanner;
 @SpringBootApplication
 @Profile("dev")
 public class ConductorApplication {
-	// ObjectMapper is from Jackson, provides API for reading/writing java objects as JSON
 	@Autowired
 	private ObjectMapper objectMapper;
 	@Autowired

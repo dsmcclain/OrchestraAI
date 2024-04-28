@@ -2,8 +2,7 @@ package dev.dylan.StringSection.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import dev.dylan.StringSection.models.Prompt;
-import org.springframework.beans.factory.annotation.Qualifier;
+import dev.dylan.StringSection.domain.Prompt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
